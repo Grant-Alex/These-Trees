@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 351e2c6c21c752840912b737f58f1a25
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - parentA: {instanceID: 0}
+  - parentB: {instanceID: 0}
+  - treeBranchA: {fileID: 4190037109916115757, guid: 82fcc75b35bc3db4cb816796160d2ea4, type: 3}
+  - treeBranchB: {fileID: 8332043979867487490, guid: 47eeaefc2b006cf42af8b44ea2f8fdfd, type: 3}
+  - treeBranchC: {fileID: 2231588058479815781, guid: 41138818a32d2484eb6982e7967e000a, type: 3}
+  - leafA: {instanceID: 0}
+  - leafB: {instanceID: 0}
+  - leafC: {instanceID: 0}
+  - fruitA: {instanceID: 0}
+  - fruitB: {instanceID: 0}
+  - fruitC: {instanceID: 0}
+  - colorA: {fileID: 2100000, guid: 8d3ddb9b6636ae94f80011572333cccf, type: 2}
+  - colorB: {fileID: 2100000, guid: 8a79c47ef3d8c694bb8cc279a1e0127d, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
