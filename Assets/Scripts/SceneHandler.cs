@@ -22,5 +22,11 @@ public class SceneHandler : MonoBehaviour
          Application.Quit(); 
     }
 
+     public void ResetScene()
+    {
+      SceneManager.LoadScene("TitleScene");
+      
+    }
+
 
 }
