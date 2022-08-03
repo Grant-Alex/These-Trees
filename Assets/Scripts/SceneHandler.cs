@@ -17,6 +17,11 @@ public class SceneHandler : MonoBehaviour
       SceneManager.LoadScene("Farm");
     }
 
+    public void StartTree()
+    {
+      SceneManager.LoadScene("Tree");
+    }
+
     public void CloseGame()
     {
          Application.Quit(); 

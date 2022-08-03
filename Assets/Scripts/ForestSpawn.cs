@@ -8,10 +8,11 @@ public class ForestSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i<40;i++){
+        for (int i = 0; i<30;i++){
              float rangeX = Random.Range(-29.0f, 29.0f);
-             float rangeZ = Random.Range(3.0f, 15.0f);
-             Vector3 treePlacement = new Vector3(rangeX,0.0f,rangeZ);
+             float rangeY = Random.Range(-0.2f, 0.0f);
+             float rangeZ = Random.Range(5.0f, 30.0f);
+             Vector3 treePlacement = new Vector3(rangeX,rangeY,rangeZ);
              Instantiate(treeForest,treePlacement,Quaternion.identity);
         }  
     }
