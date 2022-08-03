@@ -107,6 +107,39 @@ public class TreeGen : MonoBehaviour
                 branchSizeLoss = Random.Range(Mathf.Min(aSizeLoss, bSizeLoss) - 0.3f, Mathf.Max(aSizeLoss, bSizeLoss) + 0.3f);
                 verticalBranchSizeLoss = Random.Range(Mathf.Min(aVertSizeLoss, bVertSizeLoss) - 0.3f, Mathf.Max(aVertSizeLoss, bVertSizeLoss) + 0.3f);
                 if (Random.Range(0f, 1f) > 0.5f) chosenColor = aChosenColor; else chosenColor = bChosenColor;
+            } else if(parentA != null) {
+                TreeGen thingyA = parentA.GetComponent<TreeGen>();
+
+                var aDist = thingyA.getbranchDist();
+                var aRecDist =  thingyA.getbranchDistRec();
+                var aDepth = thingyA.depthGet();
+                var aSizeLoss = thingyA.getSizeLoss();
+                var aVertSizeLoss = thingyA.getVertSizeLoss();
+                var aChosenColor = thingyA.getChosenColor();
+
+
+
+                
+                for (int i = 0; i < aDist.Length; i++)
+                {
+                    var valueA = aDist[i];
+                    var minValue = valueA;
+                    var maxValue = valueA + 1;
+                    
+                    if (minValue > 0) minValue = minValue - 1;
+                    branchDist.SetValue(Random.Range(minValue, maxValue + 1), i);
+                    
+
+                    valueA = aRecDist[i];
+                    minValue = valueA;
+                    maxValue = valueA + 1;
+                    branchDistRec.SetValue(Random.Range(minValue, maxValue + 1), i);
+                }
+         //       depth = Random.Range(Mathf.Min(aDepth, aDepth) - 1, Mathf.Max(aDepth, aDepth) + 2);
+                depth = Random.Range((aDepth-1), (aDepth+2));
+                branchSizeLoss = Random.Range(aSizeLoss  - 0.3f, aSizeLoss + 0.3f);
+                verticalBranchSizeLoss = Random.Range(aVertSizeLoss - 0.3f, aVertSizeLoss + 0.3f);
+                chosenColor = aChosenColor;
             }
             
             else
