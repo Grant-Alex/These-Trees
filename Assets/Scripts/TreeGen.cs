@@ -54,117 +54,138 @@ public class TreeGen : MonoBehaviour
 
     private GameObject parent = null;
     // Start is called before the first frame update
-    void Start()
+
+
+    public bool generated = false;
+
+
+    void Update()
     {
-        branchDist = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-        branchDistRec = new int[] { 0, 0, 0, 0, 0, 0, 0 };
-        var branch = branchChooser();
-        branch = Instantiate(branch, transform);
-        branch.AddComponent<Parent>();
-        branch.GetComponent<Parent>().parent = this.gameObject;
-        //Only makes new stats if it is a new tree origin
-        if (parent == null)
+        if (!generated && ((parentA == null && parentB == null) || (parentA != null && parentB != null && parentA.GetComponent<TreeGen>().isGenerated() && parentB.GetComponent<TreeGen>().isGenerated()) || (parentA != null && parentA.GetComponent<TreeGen>().isGenerated())))
         {
-            //Sets the stats for the tree
-            if(parentA != null && parentB != null)
+            branchDist = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+            branchDistRec = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+            var branch = branchChooser();
+            branch = Instantiate(branch, transform);
+            branch.AddComponent<Parent>();
+            branch.GetComponent<Parent>().parent = this.gameObject;
+            //Only makes new stats if it is a new tree origin
+            if (parent == null)
             {
-                TreeGen thingyA = parentA.GetComponent<TreeGen>();
-                TreeGen thingyB = parentB.GetComponent<TreeGen>();
-
-                var aDist = thingyA.getbranchDist();
-                var aRecDist =  thingyA.getbranchDistRec();
-                var aDepth = thingyA.depthGet();
-                var aSizeLoss = thingyA.getSizeLoss();
-                var aVertSizeLoss = thingyA.getVertSizeLoss();
-                var aChosenColor = thingyA.getChosenColor();
-
-                var bDist = thingyB.getbranchDist();
-                var bRecDist = thingyB.getbranchDistRec();
-                var bDepth = thingyB.depthGet();
-                var bSizeLoss = thingyB.getSizeLoss();
-                var bVertSizeLoss = thingyB.getVertSizeLoss();
-                var bChosenColor = thingyB.getChosenColor();
-
-                
-                for (int i = 0; i < aDist.Length; i++)
+                //Sets the stats for the tree
+                if (parentA != null && parentB != null)
                 {
-                    var valueA = aDist[i];
-                    var valueB = bDist[i];
-                    var minValue = Mathf.Min(valueA, valueB);
-                    var maxValue = Mathf.Max(valueA, valueB) + 1;
-                    
-                    if (minValue > 0) minValue = minValue - 1;
-                    branchDist.SetValue(Random.Range(minValue, maxValue + 1), i);
-                    
+                    TreeGen thingyA = parentA.GetComponent<TreeGen>();
+                    TreeGen thingyB = parentB.GetComponent<TreeGen>();
 
-                    valueA = aRecDist[i];
-                    valueB = bRecDist[i];
-                    minValue = Mathf.Min(valueA, valueB);
-                    maxValue = Mathf.Max(valueA, valueB) + 1;
-                    branchDistRec.SetValue(Random.Range(minValue, maxValue + 1), i);
+                    var aDist = thingyA.getbranchDist();
+                    var aRecDist = thingyA.getbranchDistRec();
+                    var aDepth = thingyA.depthGet();
+                    var aSizeLoss = thingyA.getSizeLoss();
+                    var aVertSizeLoss = thingyA.getVertSizeLoss();
+                    var aChosenColor = thingyA.getChosenColor();
+
+                    var bDist = thingyB.getbranchDist();
+                    var bRecDist = thingyB.getbranchDistRec();
+                    var bDepth = thingyB.depthGet();
+                    var bSizeLoss = thingyB.getSizeLoss();
+                    var bVertSizeLoss = thingyB.getVertSizeLoss();
+                    var bChosenColor = thingyB.getChosenColor();
+
+
+                    for (int i = 0; i < aDist.Length; i++)
+                    {
+                        var valueA = aDist[i];
+                        var valueB = bDist[i];
+                        var minValue = Mathf.Min(valueA, valueB);
+                        var maxValue = Mathf.Max(valueA, valueB) + 1;
+
+                        if (minValue > 0) minValue = minValue - 1;
+                        branchDist.SetValue(Random.Range(minValue, maxValue + 1), i);
+
+
+                        valueA = aRecDist[i];
+                        valueB = bRecDist[i];
+                        minValue = Mathf.Min(valueA, valueB);
+                        maxValue = Mathf.Max(valueA, valueB) + 1;
+                        branchDistRec.SetValue(Random.Range(minValue, maxValue + 1), i);
+                    }
+                    depth = Random.Range(Mathf.Min(aDepth, bDepth) - 1, Mathf.Max(aDepth, bDepth) + 2);
+                    branchSizeLoss = Random.Range(Mathf.Min(aSizeLoss, bSizeLoss) - 0.3f, Mathf.Max(aSizeLoss, bSizeLoss) + 0.3f);
+                    verticalBranchSizeLoss = Random.Range(Mathf.Min(aVertSizeLoss, bVertSizeLoss) - 0.3f, Mathf.Max(aVertSizeLoss, bVertSizeLoss) + 0.3f);
+                    if (Random.Range(0f, 1f) > 0.5f) chosenColor = aChosenColor; else chosenColor = bChosenColor;
                 }
-                depth = Random.Range(Mathf.Min(aDepth, bDepth) - 1, Mathf.Max(aDepth, bDepth) + 2);
-                branchSizeLoss = Random.Range(Mathf.Min(aSizeLoss, bSizeLoss) - 0.3f, Mathf.Max(aSizeLoss, bSizeLoss) + 0.3f);
-                verticalBranchSizeLoss = Random.Range(Mathf.Min(aVertSizeLoss, bVertSizeLoss) - 0.3f, Mathf.Max(aVertSizeLoss, bVertSizeLoss) + 0.3f);
-                if (Random.Range(0f, 1f) > 0.5f) chosenColor = aChosenColor; else chosenColor = bChosenColor;
-            } else if(parentA != null) {
-                TreeGen thingyA = parentA.GetComponent<TreeGen>();
 
-                var aDist = thingyA.getbranchDist();
-                var aRecDist =  thingyA.getbranchDistRec();
-                var aDepth = thingyA.depthGet();
-                var aSizeLoss = thingyA.getSizeLoss();
-                var aVertSizeLoss = thingyA.getVertSizeLoss();
-                var aChosenColor = thingyA.getChosenColor();
-
-
-
-                
-                for (int i = 0; i < aDist.Length; i++)
+                else if (parentA != null)
                 {
-                    var valueA = aDist[i];
-                    var minValue = valueA;
-                    var maxValue = valueA + 1;
-                    
-                    if (minValue > 0) minValue = minValue - 1;
-                    branchDist.SetValue(Random.Range(minValue, maxValue + 1), i);
-                    
+                    TreeGen thingyA = parentA.GetComponent<TreeGen>();
 
-                    valueA = aRecDist[i];
-                    minValue = valueA;
-                    maxValue = valueA + 1;
-                    branchDistRec.SetValue(Random.Range(minValue, maxValue + 1), i);
+                    var aDist = thingyA.getbranchDist();
+                    var aRecDist = thingyA.getbranchDistRec();
+                    var aDepth = thingyA.depthGet();
+                    var aSizeLoss = thingyA.getSizeLoss();
+                    var aVertSizeLoss = thingyA.getVertSizeLoss();
+                    chosenColor = thingyA.getChosenColor();
+
+
+
+                    for (int i = 0; i < aDist.Length; i++)
+                    {
+
+                        var valueA = aDist[i];
+                        var minValue = valueA;
+                        var maxValue = valueA + 1;
+                        //if there are no top twigs than there will never be top twigs
+                        if (valueA == 0)
+                        {
+                            continue;
+                        }
+
+                        if (minValue > 0) minValue = minValue - 1;
+                        branchDist.SetValue(Random.Range(minValue, maxValue + 1), i);
+
+
+                        valueA = aRecDist[i];
+                        minValue = valueA;
+                        maxValue = valueA + 1;
+                        if (minValue > 0) minValue = minValue - 1;
+                        branchDistRec.SetValue(Random.Range(minValue, maxValue), i);
+                    }
+
+                    depth = Random.Range((aDepth), (aDepth + 1));
+                    if (aSizeLoss - 0.3 > 0) branchSizeLoss = Random.Range(aSizeLoss - 0.3f, aSizeLoss + 0.3f);
+                    else branchSizeLoss = Random.Range(aSizeLoss, aSizeLoss + 0.3f);
+
+                    if (aSizeLoss - 0.3 > 0) verticalBranchSizeLoss = Random.Range(aVertSizeLoss - 0.3f, aVertSizeLoss + 0.3f);
+                    else verticalBranchSizeLoss = Random.Range(aVertSizeLoss, aVertSizeLoss + 0.3f);
+
                 }
-         //       depth = Random.Range(Mathf.Min(aDepth, aDepth) - 1, Mathf.Max(aDepth, aDepth) + 2);
-                depth = Random.Range((aDepth-1), (aDepth+2));
-                branchSizeLoss = Random.Range(aSizeLoss  - 0.3f, aSizeLoss + 0.3f);
-                verticalBranchSizeLoss = Random.Range(aVertSizeLoss - 0.3f, aVertSizeLoss + 0.3f);
-                chosenColor = aChosenColor;
+
+                else
+                {
+                    switch (Random.Range(0, 3))
+                    {
+                        case 0:
+                            oakTree();
+                            break;
+                        case 1:
+                            spruceTree();
+                            break;
+                        case 2:
+                            birchTree();
+                            break;
+                        default:
+                            oakTree();
+                            break;
+                    }
+                }
+                branch.GetComponent<Renderer>().material = chosenColor;
+
             }
-            
-            else
-            {
-                switch (Random.Range(0, 3))
-                {
-                    case 0:
-                        oakTree();
-                        break;
-                    case 1:
-                        spruceTree();
-                        break;
-                    case 2:
-                        birchTree();
-                        break;
-                    default:
-                        oakTree();
-                        break;
-                }
-            }
-            branch.GetComponent<Renderer>().material = chosenColor;
+            treeAssembler(branch, 0);
 
         }
-        treeAssembler(branch, 0);
-        
+   
     }
 
 
@@ -235,7 +256,8 @@ public class TreeGen : MonoBehaviour
                 }
             }
         }
-        
+        generated = true;
+
     }
 
     private int randomizer(int randomfactor, int spawnpoint)
@@ -318,5 +340,10 @@ public class TreeGen : MonoBehaviour
     public Material getChosenColor()
     {
         return chosenColor;
+    }
+
+    public bool isGenerated()
+    {
+        return generated;
     }
 }
