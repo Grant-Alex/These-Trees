@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 77f3a1342241af24c885502af2d8843e
+  - enabled: 1
+    path: Assets/Scenes/Default.unity
+    guid: b5a5b01c6abf2fb4f8f3eb5dad4a68b6
+  - enabled: 1
+    path: Assets/Scenes/Farm.unity
+    guid: 647eb9ac74a1e0f47868bab76aebdd9b
+  - enabled: 1
+    path: Assets/Scenes/Tree.unity
+    guid: ea7a3ceee0a4dd04b88000ded49b7b50
   m_configObjects: {}

@@ -529,6 +529,7 @@ MonoBehaviour:
   depth: 0
   branchSizeLoss: 0
   verticalBranchSizeLoss: 0
+  generated: 0
 --- !u!4 &743802482
 Transform:
   m_ObjectHideFlags: 0
@@ -753,6 +754,7 @@ MonoBehaviour:
   depth: 0
   branchSizeLoss: 0
   verticalBranchSizeLoss: 0
+  generated: 0
 --- !u!4 &1210962673
 Transform:
   m_ObjectHideFlags: 0
@@ -1314,6 +1316,7 @@ MonoBehaviour:
   depth: 0
   branchSizeLoss: 0
   verticalBranchSizeLoss: 0
+  generated: 0
 --- !u!114 &1624843370
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -92,13 +92,18 @@ public class TreeGen : MonoBehaviour
                     var bVertSizeLoss = thingyB.getVertSizeLoss();
                     var bChosenColor = thingyB.getChosenColor();
 
-
                     for (int i = 0; i < aDist.Length; i++)
                     {
                         var valueA = aDist[i];
                         var valueB = bDist[i];
                         var minValue = Mathf.Min(valueA, valueB);
                         var maxValue = Mathf.Max(valueA, valueB) + 1;
+
+                        //if there are no twigs than there will never be twigs
+                        if (valueA == 0 && valueB == 0)
+                        {
+                            continue;
+                        }
 
                         if (minValue > 0) minValue = minValue - 1;
                         branchDist.SetValue(Random.Range(minValue, maxValue + 1), i);
@@ -111,10 +116,13 @@ public class TreeGen : MonoBehaviour
                         branchDistRec.SetValue(Random.Range(minValue, maxValue + 1), i);
                     }
                     depth = Random.Range(Mathf.Min(aDepth, bDepth) - 1, Mathf.Max(aDepth, bDepth) + 2);
+                    depth = Mathf.Clamp(depth, 0, 4);
                     branchSizeLoss = Random.Range(Mathf.Min(aSizeLoss, bSizeLoss) - 0.3f, Mathf.Max(aSizeLoss, bSizeLoss) + 0.3f);
                     verticalBranchSizeLoss = Random.Range(Mathf.Min(aVertSizeLoss, bVertSizeLoss) - 0.3f, Mathf.Max(aVertSizeLoss, bVertSizeLoss) + 0.3f);
                     if (Random.Range(0f, 1f) > 0.5f) chosenColor = aChosenColor; else chosenColor = bChosenColor;
                 }
+
+
 
                 else if (parentA != null)
                 {
